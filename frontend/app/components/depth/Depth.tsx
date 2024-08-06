@@ -59,7 +59,7 @@ export function Depth({ market }: {market: string}) {
         }
     }, [])
     
-    return <div>
+    return <div className="h-[100%]">
         <TableHeader />
         {asks && <AskTable asks={asks} />}
         {price && <div>{price}</div>}

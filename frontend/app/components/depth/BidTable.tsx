@@ -36,7 +36,7 @@ function Bid({ price, quantity, total, maxTotal }: { price: string, quantity: st
             transition: "width 0.3s ease-in-out",
             }}
         ></div>
-            <div className={`flex justify-between text-xs w-full pl-1 pr-1`}>
+            <div className={`flex justify-between text-xs w-full pl-1 pr-1 h-[20px]`}>
                 <div>
                     {price}
                 </div>

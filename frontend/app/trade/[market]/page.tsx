@@ -10,11 +10,11 @@ export default function Page() {
     return <div className="flex flex-row flex-1 overflow-y-hidden overflow-x-hidden">
             <div className="flex flex-col flex-1 overflow-y-hidden">
             <MarketBar market={market as string} />
-            <div className="flex flex-row border-y border-slate-800">
+            <div className="flex flex-row border-y h-[80vh] border-slate-800">
                 <div className="flex flex-col flex-1">
                     <TradeView market={market as string} />
                 </div>
-                <div className="flex flex-col w-[250px] overflow-hidden">
+                <div className="flex flex-col w-[250px] overflow-hidden h-[100%]">
                     <Depth market={market as string} /> 
                 </div>
             </div>

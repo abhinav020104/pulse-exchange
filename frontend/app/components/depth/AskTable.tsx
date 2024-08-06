@@ -33,7 +33,7 @@ function Ask({price, quantity, total, maxTotal}: {price: string, quantity: strin
         background: "rgba(228, 75, 68, 0.325)",
         transition: "width 0.3s ease-in-out",}}
         ></div>
-        <div className="flex justify-between text-xs w-full pl-1 pr-1">
+        <div className="flex justify-between text-xs w-full pl-1 pr-1 h-[20px]">
             <div>
                 {price}
             </div>
