@@ -59,6 +59,13 @@ export class ChartManager {
     });
     this.chart = chart;
     this.candleSeries = chart.addCandlestickSeries();
+    this.candleSeries.applyOptions({
+      wickUpColor: 'rgb(54, 116, 217)',
+      upColor: 'rgb(54, 116, 217)',
+      wickDownColor: 'rgb(225, 50, 85)',
+      downColor: 'rgb(225, 50, 85)',
+      borderVisible: false,
+    })
     console.log(typeof(initialData[0].timestamp))
     console.log((initialData[0].timestamp/1000) as UTCTimestamp)
     this.candleSeries.setData(
@@ -68,14 +75,14 @@ export class ChartManager {
       }))
     );
   }
-  public update(updatedPrice: any) {
-    console.log(( updatedPrice.time/1000) as UTCTimestamp)
+  public update(updatedPrice: any) {      
+    console.log(( updatedPrice.time/1000))
     if (!this.lastUpdateTime) {
       this.lastUpdateTime = new Date().getTime();
     }
 
     this.candleSeries.update({
-      time:( updatedPrice.time/1000) as UTCTimestamp,
+      time:(updatedPrice.time/1000) as UTCTimestamp,
       close: updatedPrice.close,
       low: updatedPrice.low,
       high: updatedPrice.high,

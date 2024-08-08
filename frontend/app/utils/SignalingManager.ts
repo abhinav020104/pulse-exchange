@@ -64,7 +64,7 @@ export class SignalingManager {
                             open: parseFloat(message.data.o),
                             // timestamp: new Date(message.data.E), 
                         }
-                        // console.log(new Date(message.data.T));
+                        console.log(new Date(message.data.T));
                         newKlineData.push(klineData)
                         // console.log(typeof(newKlineData[0].time))
                         callback(newKlineData[0]);

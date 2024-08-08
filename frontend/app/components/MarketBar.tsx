@@ -22,7 +22,6 @@ export const MarketBar = ({market}: {market: string}) => {
             volume: data?.volume ?? prevTicker?.volume ?? '',
         })), `TICKER-${market}`);
         SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`ticker.${market}`]}	);
-        SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`depth.${market}`]});
         SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`kline.1h.${market}`]});
         return () => {
             SignalingManager.getInstance().deRegisterCallback("ticker", `TICKER-${market}`);
@@ -37,12 +36,12 @@ export const MarketBar = ({market}: {market: string}) => {
                     <Ticker market={market} />
                     <div className="flex items-center flex-row space-x-8 pl-4">
                         <div className="flex flex-col h-full justify-center">
-                            <p className={`font-medium tabular-nums text-greenText text-md text-green-500`}>${ticker?.lastPrice}</p>
+                            <p  className={`font-medium tabular-nums text-md ${(ticker?.lastPrice ?? 0) > (ticker?.firstPrice ?? 0) ? 'text-blue-500' : 'text-red-500'}`}>${ticker?.lastPrice}</p>
                             <p className="font-medium text-sm text-sm tabular-nums">${ticker?.lastPrice}</p>
                         </div>
                         <div className="flex flex-col">
                             <p className={`font-medium text-xs text-slate-400 text-sm`}>24H Change</p>
-                            <p className={` text-sm font-medium tabular-nums leading-5 text-sm text-greenText ${Number(ticker?.priceChange) > 0 ? "text-green-500" : "text-red-500"}`}>{Number(ticker?.priceChange) > 0 ? "+" : ""} {ticker?.priceChange} {Number(ticker?.priceChangePercent)?.toFixed(2)}%</p></div><div className="flex flex-col">
+                            <p className={` text-sm font-medium tabular-nums leading-5 text-sm text-greenText ${Number(ticker?.priceChange) > 0 ? "text-blue-500" : "text-red-500"}`}>{Number(ticker?.priceChange) > 0 ? "+" : ""} {ticker?.priceChange} {Number(ticker?.priceChangePercent)?.toFixed(2)}%</p></div><div className="flex flex-col">
                                 <p className="font-medium text-xs text-slate-400 text-sm">24H High</p>
                                 <p className="text-sm font-medium tabular-nums leading-5 text-sm ">{ticker?.high}</p>
                                 </div>
