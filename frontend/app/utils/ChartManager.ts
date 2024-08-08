@@ -59,7 +59,8 @@ export class ChartManager {
     });
     this.chart = chart;
     this.candleSeries = chart.addCandlestickSeries();
-
+    console.log(typeof(initialData[0].timestamp))
+    console.log((initialData[0].timestamp/1000) as UTCTimestamp)
     this.candleSeries.setData(
       initialData.map((data) => ({
         ...data,
@@ -68,12 +69,13 @@ export class ChartManager {
     );
   }
   public update(updatedPrice: any) {
+    console.log(( updatedPrice.time/1000) as UTCTimestamp)
     if (!this.lastUpdateTime) {
       this.lastUpdateTime = new Date().getTime();
     }
 
     this.candleSeries.update({
-      time: (this.lastUpdateTime / 1000) as UTCTimestamp,
+      time:( updatedPrice.time/1000) as UTCTimestamp,
       close: updatedPrice.close,
       low: updatedPrice.low,
       high: updatedPrice.high,

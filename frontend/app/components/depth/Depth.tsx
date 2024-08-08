@@ -12,6 +12,10 @@ export function Depth({ market }: {market: string}) {
     const [price, setPrice] = useState<string>();
 
     useEffect(() => {
+        SignalingManager.getInstance().registerCallback("ticker" , (data:any)=>{
+            console.log(typeof(data.lastPrice))
+            setPrice(data.lastPrice)
+        } , `TICKER-${market}`)
         SignalingManager.getInstance().registerCallback("depth", (data: any) => {
             
             setBids((originalBids) => {
@@ -41,8 +45,7 @@ export function Depth({ market }: {market: string}) {
                 }
                 return asksAfterUpdate; 
             });
-        }, `DEPTH-${market}`);
-        
+        }, `DEPTH-${market}`); 
         SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`depth.${market}`]});
 
         getDepth(market).then(d => {    
@@ -50,13 +53,12 @@ export function Depth({ market }: {market: string}) {
             setAsks(d.asks);
         });
 
-        getTicker(market).then(t => setPrice(t.lastPrice));
-        getTrades(market).then(t => setPrice(t[0].price));
-        // getKlines(market, "1h", 1640099200, 1640100800).then(t => setPrice(t[0].close));
         return () => {
             SignalingManager.getInstance().sendMessage({"method":"UNSUBSCRIBE","params":[`depth.200ms.${market}`]});
             SignalingManager.getInstance().deRegisterCallback("depth", `DEPTH-${market}`);
+            SignalingManager.getInstance().deRegisterCallback("ticker", `DEPTH-${market}`);
         }
+        
     }, [])
     
     return <div className="h-[100%]">

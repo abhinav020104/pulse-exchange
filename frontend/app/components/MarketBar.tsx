@@ -22,7 +22,8 @@ export const MarketBar = ({market}: {market: string}) => {
             volume: data?.volume ?? prevTicker?.volume ?? '',
         })), `TICKER-${market}`);
         SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`ticker.${market}`]}	);
-
+        SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`depth.${market}`]});
+        SignalingManager.getInstance().sendMessage({"method":"SUBSCRIBE","params":[`kline.1h.${market}`]});
         return () => {
             SignalingManager.getInstance().deRegisterCallback("ticker", `TICKER-${market}`);
             SignalingManager.getInstance().sendMessage({"method":"UNSUBSCRIBE","params":[`ticker.${market}`]}	);

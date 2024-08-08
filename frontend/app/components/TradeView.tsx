@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChartManager } from "../utils/ChartManager";
 import { getKlines } from "../utils/httpClient";
 import { KLine } from "../utils/types";
+import { SignalingManager } from "../utils/SignalingManager";
 
 export function TradeView({
   market,
@@ -10,23 +11,18 @@ export function TradeView({
 }) {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartManagerRef = useRef<ChartManager>(null);
-
-  useEffect(() => {
-    const init = async () => {
-      let klineData: KLine[] = [];
-      try {
-        klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 24 * 7) / 1000), Math.floor(new Date().getTime() / 1000)); 
-      } catch (e) { }
-
+  let klineData: any = [];
+  const init = async () => {
+    try {
+      klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 24 * 7) / 1000), Math.floor(new Date().getTime() / 1000));
       if (chartRef) {
         if (chartManagerRef.current) {
           chartManagerRef.current.destroy();
         }
-
         const chartManager = new ChartManager(
           chartRef.current,
           [
-            ...klineData?.map((x) => ({
+            ...klineData?.map((x:any) => ({
               close: parseFloat(x.close),
               high: parseFloat(x.high),
               low: parseFloat(x.low),
@@ -41,8 +37,15 @@ export function TradeView({
         );
         //@ts-ignore
         chartManagerRef.current = chartManager;
-      }
-    };
+      } 
+    } catch (e) { }
+  };
+  
+  useEffect(() => {
+    SignalingManager.getInstance().registerCallback("kline" , (data:any) =>{
+      console.log(data);
+      chartManagerRef.current?.update(data);
+    } , `KLINE-${market}`)
     init();
   }, [market, chartRef]);
 
