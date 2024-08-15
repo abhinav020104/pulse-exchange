@@ -1,7 +1,7 @@
 import { UTCTimestamp } from "lightweight-charts";
 import { Ticker } from "./types";
 
-export const BASE_URL = "wss://ws.backpack.exchange/"
+export const BASE_URL = "ws://localhost:3001";
 
 export class SignalingManager {
     private ws: WebSocket;
@@ -40,7 +40,7 @@ export class SignalingManager {
                 this.callbacks[type].forEach(({ callback } :any) => {
                     if (type === "ticker") {
                         const newTicker: Partial<Ticker> = {
-                            lastPrice: message.data.c,
+                            c: message.data.c,
                             high: message.data.h,
                             low: message.data.l,
                             volume: message.data.v,
@@ -55,18 +55,17 @@ export class SignalingManager {
                         callback({ bids: updatedBids, asks: updatedAsks });
                     }
                     if(type == "kline"){
+                        console.log("inside kline register" , message.data);
                         const newKlineData = [];
                         const klineData:any = {
-                            time:(new Date(message.data.T)),
-                            close: parseFloat(message.data.c),
-                            high: parseFloat(message.data.h),
-                            low: parseFloat(message.data.l),
-                            open: parseFloat(message.data.o),
-                            // timestamp: new Date(message.data.E), 
+                            time:(new Date(message.data.time)),
+                            close: parseFloat(message.data.close),
+                            high: parseFloat(message.data.high),
+                            low: parseFloat(message.data.low),
+                            open: parseFloat(message.data.open), 
                         }
                         console.log(new Date(message.data.T));
                         newKlineData.push(klineData)
-                        // console.log(typeof(newKlineData[0].time))
                         callback(newKlineData[0]);
                     }
                 });
@@ -89,10 +88,10 @@ export class SignalingManager {
     async registerCallback(type: string, callback: any, id: string) {
         this.callbacks[type] = this.callbacks[type] || [];
         this.callbacks[type].push({ callback, id });
-        // "ticker" => callback
+        // "ticker" => callbackJSON
     }
 
-    async deRegisterCallback(type: string, id: string) {
+    async deRegisterCallback(type: string, id: string) {    
         if (this.callbacks[type]) {
             const index = this.callbacks[type].findIndex((callback:any) => callback.id === id);
             if (index !== -1) {

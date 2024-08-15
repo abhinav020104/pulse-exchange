@@ -14,7 +14,8 @@ export function TradeView({
   let klineData: any = [];
   const init = async () => {
     try {
-      klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 24 * 7) / 1000), Math.floor(new Date().getTime() / 1000));
+      klineData = await getKlines(market, "1h", Math.floor((new Date().getTime() - 1000 * 60 * 60 * 36 * 7) / 1000), Math.floor(new Date().getTime() / 1000));
+      console.log(klineData);
       if (chartRef) {
         if (chartManagerRef.current) {
           chartManagerRef.current.destroy();
