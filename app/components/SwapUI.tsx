@@ -14,7 +14,7 @@ export function SwapUI({ market }: {market: string}) {
             try{
                 const response = await axios({
                 method:"post",
-                    url:"http://localhost:3000/api/v1/auth/getUserDetails",
+                    url:"https://pulse-api-server.codewithabhinav.online/api/v1/auth/getUserDetails",
                     data:{
                         token:token
                     }
@@ -51,7 +51,7 @@ const [orderData , setOrderData] = useState({
             toast.loading("Placing Order");
             const response = await axios({
                 method:"post",
-                url:"http://localhost:3000/api/v1/order",
+                url:"https://pulse-api-server.codewithabhinav.online/api/v1/order",
                 data:orderData
             })
             await fetchUser();

@@ -20,7 +20,7 @@ const OtpVerification = () => {
       await OtpData.confirm(otp);
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/v1/auth/signup",
+        url: "https://pulse-api-server.codewithabhinav.online/api/v1/auth/signup",
         data: signUpdata,
       });
       toast.success("SignUp successful");

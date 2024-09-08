@@ -1,7 +1,7 @@
 import { UTCTimestamp } from "lightweight-charts";
 import { Ticker } from "./types";
 
-export const BASE_URL = "ws://localhost:3001";
+export const BASE_URL = "wss://pulse-ws-server.codewithabhinav.online";
 
 export class SignalingManager {
     private ws: WebSocket;

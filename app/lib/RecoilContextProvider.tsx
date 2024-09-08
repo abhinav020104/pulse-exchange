@@ -9,7 +9,7 @@ const RecoilContextProvider = ({children}: Readonly<{ children: React.ReactNode;
         try{
             const response = await axios({
                 method:"post",
-                    url:"http://localhost:3000/api/v1/auth/getUserDetails",
+                    url:"https://pulse-api-server.codewithabhinav.online/api/v1/auth/getUserDetails",
                     data:{
                       token:token
                     }

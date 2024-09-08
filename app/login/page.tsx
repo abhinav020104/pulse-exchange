@@ -15,7 +15,7 @@ const Login = () => {
     const loginHandler = async () => {
         try {
             toast.loading("Login in progress!");
-            const response = await axios.post("http://localhost:3000/api/v1/auth/login", loginData);
+            const response = await axios.post("https://pulse-api-server.codewithabhinav.online/api/v1/auth/login", loginData);
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
             localStorage.setItem("user", JSON.stringify(response.data.data));
             setUser(response.data.data);
