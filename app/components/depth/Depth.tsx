@@ -107,7 +107,7 @@ export function Depth({ market }: {market: string}) {
             SignalingManager.getInstance().deRegisterCallback("ticker", `DEPTH-${market}`);
         }
         
-    }, [])
+    }, [ticker])
     
     return <div className="h-[100%]">
         <TableHeader />
