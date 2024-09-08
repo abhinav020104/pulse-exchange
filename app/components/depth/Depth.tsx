@@ -14,7 +14,7 @@ export function Depth({ market }: {market: string}) {
         SignalingManager.getInstance().registerCallback("ticker", (data: Partial<TickerType>)  =>  setTicker((prevTicker:any) => ({
             firstPrice: data?.firstPrice ?? prevTicker?.firstPrice ?? '',
             high: data?.high ?? prevTicker?.high ?? '',
-            c: data?.c ?? prevTicker?.c ?? '',
+            currentPrice: data?.currentPrice ?? prevTicker?.currentPrice ?? '',
             low: data?.low ?? prevTicker?.low ?? '',
             priceChange: data?.priceChange ?? prevTicker?.priceChange ?? '',
             priceChangePercent: data?.priceChangePercent ?? prevTicker?.priceChangePercent ?? '',
@@ -112,9 +112,9 @@ export function Depth({ market }: {market: string}) {
     return <div className="h-[100%]">
         <TableHeader />
         {asks && <AskTable asks={asks} />}
-        {(ticker?.c ?? 0) && <div className={`text-[1.2rem] ${
-    (ticker?.c ?? 0) > (ticker?.firstPrice ?? 0) ? 'text-blue-500' : 'text-red-500'
-  }`}>{ticker?.c ?? 0}</div>}
+        {(ticker?.currentPrice ?? 0) && <div className={`text-[1.2rem] ${
+    (ticker?.currentPrice ?? 0) > (ticker?.firstPrice ?? 0) ? 'text-blue-500' : 'text-red-500'
+  }`}>{ticker?.currentPrice ?? 0}</div>}
         {bids && <BidTable bids={bids} />}
     </div>
 }

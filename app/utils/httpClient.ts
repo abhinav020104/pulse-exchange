@@ -5,6 +5,7 @@ import { Depth, KLine, Ticker, Trade } from "./types";
 const BASE_URL = "http://localhost:3000/api/v1";
 
 export async function getTicker(market: string): Promise<Ticker> {
+    console.log(market);
     const tickers = await getTickers();
     const ticker = tickers.find(t => t.symbol === market);
     if (!ticker) {
@@ -15,7 +16,8 @@ export async function getTicker(market: string): Promise<Ticker> {
 
 export async function getTickers(): Promise<Ticker[]> {
     const response = await axios.get(`${BASE_URL}/tickers`);
-    return response.data;
+    console.log(response.data.data.payload.tickers);
+    return response.data.data.payload.tickers;
 }
 
 

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Appbar } from "./components/Appbar";
-
+import RecoilContextProvider from "./lib/RecoilContextProvider";
+import { Toaster } from "react-hot-toast"
+import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,8 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Appbar/>
-        {children}
+        <RecoilContextProvider>
+          <Toaster></Toaster>
+          <Appbar/>
+          {children}
+        </RecoilContextProvider>
+        <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js"></Script>
       </body>
     </html>
   );

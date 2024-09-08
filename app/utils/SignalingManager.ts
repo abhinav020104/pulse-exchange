@@ -36,11 +36,12 @@ export class SignalingManager {
         this.ws.onmessage = (event) => {
             const message = JSON.parse(event.data);
             const type = message.data.e;
+            console.log(message.data.s);
             if (this.callbacks[type]) {
                 this.callbacks[type].forEach(({ callback } :any) => {
                     if (type === "ticker") {
                         const newTicker: Partial<Ticker> = {
-                            c: message.data.c,
+                            currentPrice: message.data.c,
                             high: message.data.h,
                             low: message.data.l,
                             volume: message.data.v,
@@ -67,6 +68,25 @@ export class SignalingManager {
                         console.log(new Date(message.data.T));
                         newKlineData.push(klineData)
                         callback(newKlineData[0]);
+                    }
+                    if(type == "24hstats"){
+                        const response = {
+                            currentPrice: message.data.currentPrice,
+                            change24h: message.data.change24h,
+                            change24hPercentage: message.data.change24hPercentage,
+                            high24h: message.data.high24h,
+                            low24h: message.data.low24h,
+                            volume24h: message.data.volume24h,
+                        }
+                        callback(response);
+                    }
+                    if(type == "allTickers"){
+                        console.log(message.data.c);
+                        const response = {
+                            symbol:message.data.s,
+                            currentPrice:message.data.c
+                        }
+                        callback(response);
                     }
                 });
             }
