@@ -14,7 +14,7 @@ const Deposit = () => {
 
     const clickHandler = async () => {
         try {
-            const order = await axios.post("http://localhost:3000/api/v1/auth/order", {
+            const order = await axios.post("https://pulse-api-server.codewithabhinav.online/api/v1/auth/order", {
                 //@ts-ignore
                 amount: topUpData.amount * 100,
                 currency: "USD",
@@ -33,9 +33,9 @@ const Deposit = () => {
                 handler: async function (response: any) {
                     try {
                         toast.loading("Top Up In Process");
-                        const validateRes = await axios.post("http://localhost:3000/api/v1/auth/validate", response);
-                        const updatedBalance = await axios.put("http://localhost:3000/api/v1/auth/deposit", topUpData);
-                        await axios.post("http://localhost:3000/api/v1/setbalances", topUpData);
+                        const validateRes = await axios.post("https://pulse-api-server.codewithabhinav.online/api/v1/auth/validate", response);
+                        const updatedBalance = await axios.put("https://pulse-api-server.codewithabhinav.online/api/v1/auth/deposit", topUpData);
+                        await axios.post("https://pulse-api-server.codewithabhinav.online/api/v1/setbalances", topUpData);
 
                         toast.dismiss();
                         toast.success("Top Up successful!");

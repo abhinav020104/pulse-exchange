@@ -18,7 +18,7 @@ const Holdings = () => {
     const fetchHoldings = async () => {
         try {
             toast.loading("Fetching User Holdings!");
-            const response = await axios.post("http://localhost:3000/api/v1/order/getholdings", {
+            const response = await axios.post("https://pulse-api-server.codewithabhinav.online/api/v1/order/getholdings", {
                 userId: user.UserId,
             });
             toast.dismiss();
